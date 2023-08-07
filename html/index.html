@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            position: absolute;
+            top: 6vh;
+            right: 10px;
+            color: white;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 225px;
+            height: 30px;
+            background-color: #5D5B5A;
+            overflow: hidden;
+            mask-size: cover;
+            -webkit-mask-size: cover !important;
+            -webkit-mask: url(nui://elz_cripps/html/images/shard_game_update.png) no-repeat center;
+            mask: url(nui://elz_cripps/html/images/shard_game_update.png) no-repeat center;
+        }
+
+        .progress-bar-fill {
+            height: 40px;
+            /* Change this to adjust the fill */
+            background-color: #fff;
+        }
+
+        .line {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        #materialsImg {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            mask-size: contain;
+            -webkit-mask-size: contain !important;
+            -webkit-mask: url(nui://elz_cripps/html/images/butcher_table_raw_materials.png) no-repeat center;
+            mask: url(nui://elz_cripps/html/images/butcher_table_raw_materials.png) no-repeat center;
+        }
+
+        #productionImg {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            mask-size: contain;
+            -webkit-mask-size: contain !important;
+            -webkit-mask: url(nui://elz_cripps/html/images/butcher_table_production.png) no-repeat center;
+            mask: url(nui://elz_cripps/html/images/butcher_table_production.png) no-repeat center;
+        }
+
+        #goodsImg {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            mask-size: contain;
+            -webkit-mask-size: contain !important;
+            -webkit-mask: url(nui://elz_cripps/html/images/butcher_table_goods.png) no-repeat center;
+            mask: url(nui://elz_cripps/html/images/butcher_table_goods.png) no-repeat center;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+            window.addEventListener('message', function (event) {
+                switch (event.data.action) {
+                    case 'show':
+                        document.body.style.display = "block";
+                        break;
+                    case 'hide':
+                        document.body.style.display = "none";
+                        break;
+                    case 'updateProgress':
+                        var materialsElement = document.getElementById('materials');
+                        var materialsImgElement = document.getElementById('materialsImg');
+                        var materialsContainerElement = materialsElement.parentElement;
+                        materialsElement.style.width = event.data.materials + "%";
+
+                        var productionElement = document.getElementById('production');
+                        var productionImgElement = document.getElementById('productionImg');
+                        var productionContainerElement = productionElement.parentElement;
+                        productionElement.style.width = event.data.production + "%";
+
+
+                        var goodsElement = document.getElementById('goods');
+                        var goodsImgElement = document.getElementById('goodsImg');
+                        var goodsContainerElement = goodsElement.parentElement;
+                        goodsElement.style.width = event.data.goods + "%";
+
+
+                        if (event.data.materials < 20) {
+                            materialsElement.style.backgroundColor = "#C80000";
+                            materialsImgElement.style.background = "#C80000";
+                            materialsContainerElement.style.backgroundColor = "#790D1C";
+                        } else {
+                            materialsElement.style.backgroundColor = "#fff";
+                            materialsImgElement.style.background = "#fff";
+                            materialsContainerElement.style.backgroundColor = "#5D5B5A";
+                        }
+
+
+                        if (event.data.production < 20) {
+                            productionElement.style.backgroundColor = "#C80000";
+                            productionImgElement.style.background = "#C80000";
+                            productionContainerElement.style.backgroundColor = "#790D1C";
+                        } else {
+                            productionElement.style.backgroundColor = "#fff";
+                            productionImgElement.style.background = "#fff";
+                            productionContainerElement.style.backgroundColor = "#5D5B5A";
+                        }
+
+                        if (event.data.goods < 20) {
+                            goodsElement.style.backgroundColor = "#C80000";
+                            goodsImgElement.style.background = "#C80000";
+                            goodsContainerElement.style.backgroundColor = "#790D1C";
+                        } else {
+                            goodsElement.style.backgroundColor = "#fff";
+                            goodsImgElement.style.background = "#fff";
+                            goodsContainerElement.style.backgroundColor = "#5D5B5A";
+                        }
+
+                        // Repeat for the 'production' and 'goods' progress bars.
+                        break;
+                }
+            });
+        };
+
+    </script>
+</head>
+
+<body>
+    <div class="line">
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="materials"></div>
+        </div>
+        <div id="materialsImg" style="height: 50px; width: 50px; margin-left: 10px;"></div>
+    </div>
+
+    <div class="line">
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="production"></div>
+        </div>
+        <div id="productionImg" style="height: 50px; width: 50px; margin-left: 10px;"></div>
+    </div>
+
+    <div class="line">
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="goods"></div>
+        </div>
+        <div id="goodsImg" style="height: 50px; width: 50px; margin-left: 10px;"></div>
+    </div>
+</body>
+
+
+</html>
